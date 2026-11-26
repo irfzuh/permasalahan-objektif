@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ibadah Puasa Ramadan • Pendidikan Islam Tahun 4 (SK 4.3)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Amiri (for Quranic Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tone.js for synthesized Islamic chimes & UI SFX (No external sound URLs) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <style>
+    :root {
+      --emerald-deep: #042d1e;
+      --emerald-mid: #084c33;
+      --emerald-light: #106b49;
+      --gold-primary: #d4af37;
+      --gold-bright: #f7dc79;
+      --gold-dark: #9e7b1c;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #021c12;
+      color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Kunci tatalan (zero-scroll) untuk iframe Jotform */
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Bekas Aspect Ratio 700x500 (7:5) yang responsif untuk Jotform Embed */
+    .jotform-embed-stage {
+      width: 100%;
+      height: 100%;
+      max-width: 700px;
+      max-height: 500px;
+      aspect-ratio: 700 / 500;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .font-arabic {
+      font-family: 'Amiri', serif;
+      line-height: 1.9;
+    }
+
+    /* Latar Belakang Pemandangan Hijau Zamrud & Fajar Keemasan */
+    .scenic-canvas {
+      background: radial-gradient(circle at 50% 82%, rgba(250, 204, 21, 0.36) 0%, rgba(16, 107, 73, 0.45) 36%, rgba(4, 45, 30, 0.96) 78%),
+                  linear-gradient(180deg, #032619 0%, #074730 55%, #0e6343 100%);
+    }
+
+    /* Corak Geometri Islamik di Penjuru */
+    .islamic-lattice {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.8' stroke-opacity='0.22'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z'/%3E%3Crect x='15' y='15' width='30' height='30'/%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Bingkai Emas Berkilau */
+    .gold-border {
+      border: 1.5px solid rgba(212, 175, 55, 0.55);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.14), inset 0 0 14px rgba(212, 175, 55, 0.08);
+    }
+
+    .gold-card {
+      background: rgba(5, 44, 30, 0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(212, 175, 55, 0.38);
+    }
+
+    .gold-card:hover {
+      border-color: rgba(247, 220, 121, 0.75);
+    }
+
+    /* Animasi Daun Lembut */
+    @keyframes swayLeaf {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(2.5deg); }
+    }
+    .leaf-sway {
+      transform-origin: top left;
+      animation: swayLeaf 6s ease-in-out infinite;
+    }
+    .leaf-sway-right {
+      transform-origin: top right;
+      animation: swayLeaf 7s ease-in-out infinite reverse;
+    }
+
+    /* Animasi Cahaya Fajar */
+    @keyframes sunPulse {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); }
+    }
+    .dawn-glow {
+      animation: sunPulse 5s ease-in-out infinite;
+    }
+
+    /* Bar Tatalan Halus Jika Skrin Terlalu Kecil */
+    .panel-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .panel-scroll::-webkit-scrollbar-track {
+      background: rgba(4, 45, 30, 0.3);
+    }
+    .panel-scroll::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.45);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PENTAS UTAMA 700x500 (ASPECT RATIO 7:5 UNTUK JOTFORM EMBED) -->
+  <div id="embedStage" class="jotform-embed-stage scenic-canvas p-2 shadow-2xl">
+
+    <!-- LAPISAN LATAR BELAKANG DEKORATIF SVG -->
+    <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      <!-- Corak Geometri Penjuru Atas -->
+      <div class="islamic-lattice absolute top-0 left-0 w-28 h-28 opacity-65 rounded-br-2xl"></div>
+      <div class="islamic-lattice absolute top-0 right-0 w-28 h-28 opacity-65 rounded-bl-2xl"></div>
+
+      <!-- Siluet Bukit & Fajar Menyinsing -->
+      <svg class="absolute bottom-0 left-0 w-full h-36" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <defs>
+          <radialGradient id="sunriseGrad" cx="50%" cy="85%" r="45%">
+            <stop offset="0%" stop-color="#fef08a" stop-opacity="0.95" />
+            <stop offset="40%" stop-color="#f59e0b" stop-opacity="0.45" />
+            <stop offset="100%" stop-color="#064e3b" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#137952" stop-opacity="0.65" />
+            <stop offset="100%" stop-color="#053826" stop-opacity="0.95" />
+          </linearGradient>
+          <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0b5539" stop-opacity="0.88" />
+            <stop offset="100%" stop-color="#032619" stop-opacity="1" />
+          </linearGradient>
+        </defs>
+        <circle cx="720" cy="255" r="240" fill="url(#sunriseGrad)" class="dawn-glow" />
+        <path fill="url(#hillBack)" d="M0,210 C220,140 410,235 720,238 C1030,240 1210,145 1440,195 L1440,320 L0,320 Z" />
+        <path fill="url(#hillFront)" d="M0,245 C290,190 520,275 720,262 C950,248 1190,185 1440,235 L1440,320 L0,320 Z" />
+      </svg>
+
+      <!-- Bingkai Lengkungan Kubah Islamik -->
+      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1440 900" preserveAspectRatio="none">
+        <path d="M 55,900 L 55,300 Q 55,235 120,215 Q 110,150 205,115 Q 465,18 720,12 Q 975,18 1235,115 Q 1330,150 1320,215 Q 1385,235 1385,300 L 1385,900"
+              fill="none" stroke="#d4af37" stroke-width="2.5" stroke-opacity="0.4" />
+      </svg>
+
+      <!-- Dedaun Hijau Penjuru Atas Kiri -->
+      <svg class="leaf-sway absolute -top-2 -left-2 w-24 h-24 opacity-85" viewBox="0 0 220 220">
+        <path d="M0,10 Q95,45 195,15" stroke="#85a947" stroke-width="3" fill="none" />
+        <path d="M40,22 C55,2 85,5 80,26 C62,32 45,28 40,22 Z" fill="#4d9e39" />
+        <path d="M85,30 C105,8 135,12 128,34 C110,39 92,35 85,30 Z" fill="#65b849" />
+        <path d="M135,28 C155,8 182,12 175,32 C158,37 142,33 135,28 Z" fill="#3e882d" />
+        <path d="M55,26 C68,48 92,55 96,35 C80,26 65,24 55,26 Z" fill="#3a7d29" />
+        <path d="M15,45 Q55,105 35,175" stroke="#85a947" stroke-width="2.5" fill="none" />
+        <path d="M32,78 C10,92 12,122 33,116 C39,98 37,85 32,78 Z" fill="#5cb342" />
+      </svg>
+
+      <!-- Dedaun Hijau Penjuru Atas Kanan -->
+      <svg class="leaf-sway-right absolute -top-2 -right-2 w-24 h-24 opacity-85" viewBox="0 0 220 220">
+        <g transform="scale(-1,1) translate(-220,0)">
+          <path d="M0,10 Q95,45 195,15" stroke="#85a947" stroke-width="3" fill="none" />
+          <path d="M40,22 C55,2 85,5 80,26 C62,32 45,28 40,22 Z" fill="#4d9e39" />
+          <path d="M85,30 C105,8 135,12 128,34 C110,39 92,35 85,30 Z" fill="#65b849" />
+          <path d="M135,28 C155,8 182,12 175,32 C158,37 142,33 135,28 Z" fill="#3e882d" />
+          <path d="M55,26 C68,48 92,55 96,35 C80,26 65,24 55,26 Z" fill="#3a7d29" />
+          <path d="M15,45 Q55,105 35,175" stroke="#85a947" stroke-width="2.5" fill="none" />
+          <path d="M32,78 C10,92 12,122 33,116 C39,98 37,85 32,78 Z" fill="#5cb342" />
+        </g>
+      </svg>
+
+      <!-- Dedaun Hijau Bawah Kiri & Kanan -->
+      <svg class="absolute -bottom-2 -left-2 w-20 h-20 opacity-80" viewBox="0 0 180 180">
+        <path d="M10,175 Q65,115 135,145" stroke="#7aa33e" stroke-width="2.5" fill="none" />
+        <path d="M45,142 C48,115 78,112 76,136 C60,144 50,144 45,142 Z" fill="#57ab3e" />
+        <path d="M85,136 C95,110 124,112 118,135 C102,141 91,140 85,136 Z" fill="#3e882d" />
+      </svg>
+
+      <svg class="absolute -bottom-2 -right-2 w-20 h-20 opacity-80" viewBox="0 0 180 180">
+        <g transform="scale(-1,1) translate(-180,0)">
+          <path d="M10,175 Q65,115 135,145" stroke="#7aa33e" stroke-width="2.5" fill="none" />
+          <path d="M45,142 C48,115 78,112 76,136 C60,144 50,144 45,142 Z" fill="#57ab3e" />
+          <path d="M85,136 C95,110 124,112 118,135 C102,141 91,140 85,136 Z" fill="#3e882d" />
+        </g>
+      </svg>
+    </div>
+
+    <!-- KANDUNGAN UTAMA APLIKASI (DIOPTIMUMKAN UNTUK 700x500) -->
+    <div class="relative z-10 flex flex-col h-full w-full">
+
+      <!-- BAR PENGEPALA ATAS (PADAT & JELAS) -->
+      <header class="gold-card rounded-xl px-2.5 py-1.5 flex items-center justify-between gap-1.5 shrink-0 mb-1.5">
+        <div class="flex items-center gap-2 min-w-0">
+          <!-- Ikon Bulan Sabit -->
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-300 via-yellow-500 to-amber-700 flex items-center justify-center shadow shrink-0">
+            <svg class="w-4 h-4 text-emerald-950" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+            </svg>
+          </div>
+          <div class="truncate">
+            <span class="block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 w-fit leading-tight">
+              Pendidikan Islam Tahun 4 • SK 4.3
+            </span>
+            <h1 class="text-xs sm:text-sm font-extrabold text-amber-100 tracking-tight leading-tight truncate mt-0.5">
+              Ibadah Puasa Ramadan
+            </h1>
+          </div>
+        </div>
+
+        <!-- Kawalan Butang Tab & Bunyi SFX -->
+        <div class="flex items-center gap-1 shrink-0">
+          <button onclick="switchTab('all')" id="btnTabAll" class="px-2 py-1 rounded-lg bg-amber-400 text-emerald-950 border border-amber-300 text-[10px] font-extrabold cursor-pointer shadow">
+            Paparan Penuh
+          </button>
+
+          <button onclick="switchTab('masalah')" id="btnTabMasalah" class="px-2 py-1 rounded-lg bg-emerald-900/85 hover:bg-emerald-800 border border-amber-400/40 text-amber-200 text-[10px] font-bold cursor-pointer">
+            1. Masalah
+          </button>
+
+          <button onclick="switchTab('objektif')" id="btnTabObjektif" class="px-2 py-1 rounded-lg bg-emerald-900/85 hover:bg-emerald-800 border border-amber-400/40 text-amber-200 text-[10px] font-bold cursor-pointer">
+            2. Objektif
+          </button>
+
+          <!-- Butang Bunyi SFX -->
+          <button id="sfxToggleBtn" onclick="toggleSound()" title="Hidup/Matikan Bunyi SFX" class="p-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-300 cursor-pointer">
+            <svg id="sfxIconOn" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+            </svg>
+            <svg id="sfxIconOff" class="w-3.5 h-3.5 hidden text-rose-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- RUANG KERJA UTAMA: 2 LAJUR SEBELAH-MENYEBELAH (MUAT 700x500 TANPA SCROLL) -->
+      <main id="mainWorkspace" class="flex-1 grid grid-cols-2 gap-2 min-h-0 overflow-hidden">
+        <!-- Dijana secara dinamik oleh JavaScript -->
+      </main>
+    </div>
+
+    <!-- NOTIFIKASI TOAST -->
+    <div id="toastBox" class="absolute bottom-2.5 right-2.5 z-50 hidden items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-950/95 border border-amber-400 text-amber-100 text-[11px] font-semibold shadow-xl">
+      <span id="toastIcon">✨</span>
+      <span id="toastMsg">Selesai</span>
+    </div>
+
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. ENJIN AUDIO (TONE.JS SYNTHESIZED ISLAMIC CHIMES & INTERACTION SFX)
+       ========================================================================== */
+    let soundEnabled = true;
+    let synth = null;
+    let chordSynth = null;
+
+    function initAudio() {
+      if (!synth && typeof Tone !== 'undefined') {
+        synth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "triangle" },
+          envelope: { attack: 0.02, decay: 0.25, sustain: 0.1, release: 0.8 }
+        }).toDestination();
+        synth.volume.value = -10;
+
+        chordSynth = new Tone.PluckSynth({
+          attackNoise: 1,
+          dampening: 3200,
+          resonance: 0.92
+        }).toDestination();
+        chordSynth.volume.value = -8;
+      }
+    }
+
+    async function playSFX(type) {
+      if (!soundEnabled) return;
+      try {
+        if (Tone.context.state !== 'running') {
+          await Tone.start();
+        }
+        initAudio();
+        if (!synth) return;
+
+        const now = Tone.now();
+        if (type === 'click') {
+          synth.triggerAttackRelease("E5", "32n", now);
+        } else if (type === 'tab') {
+          chordSynth.triggerAttack("D4", now);
+          chordSynth.triggerAttack("Eb4", now + 0.06);
+          chordSynth.triggerAttack("G4", now + 0.12);
+        } else if (type === 'correct') {
+          synth.triggerAttackRelease(["D5", "F#5", "A5"], "16n", now);
+          synth.triggerAttackRelease(["D6"], "8n", now + 0.12);
+        } else if (type === 'wrong') {
+          synth.triggerAttackRelease(["Eb4", "D4"], "16n", now);
+        } else if (type === 'niat') {
+          const notes = ["D4", "G4", "A4", "Bb4", "D5"];
+          notes.forEach((n, i) => synth.triggerAttackRelease(n, "16n", now + i * 0.09));
+        }
+      } catch (e) {
+        // Abaikan sekiranya pelayar menyekat audio sebelum interaksi pengguna
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('sfxIconOn').classList.toggle('hidden', !soundEnabled);
+      document.getElementById('sfxIconOff').classList.toggle('hidden', soundEnabled);
+      if (soundEnabled) playSFX('correct');
+      showToast(soundEnabled ? "Bunyi SFX Diaktifkan 🔊" : "Bunyi SFX Dimatikan 🔇");
+    }
+
+    function showToast(msg, icon = "✨") {
+      const box = document.getElementById('toastBox');
+      document.getElementById('toastMsg').textContent = msg;
+      document.getElementById('toastIcon').textContent = icon;
+      box.classList.remove('hidden');
+      box.classList.add('flex');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        box.classList.add('hidden');
+        box.classList.remove('flex');
+      }, 2200);
+    }
+
+    /* ==========================================================================
+       2. DATA KANDUNGAN (TEKS TEPAT SEPERTI YANG DIBERIKAN)
+       ========================================================================== */
+    const penyataanMasalah = [
+      {
+        tajuk: "Kekeliruan antara Syarat Wajib dan Syarat Sah:",
+        huraian: "Murid sering keliru membezakan antara syarat wajib berpuasa (seperti baligh dan mampu) dengan syarat sah berpuasa (seperti mumayyiz dan suci daripada haid/nifas), termasuk status sah puasa bagi kanak-kanak yang belum baligh."
+      },
+      {
+        tajuk: "Salah Faham Perkara Membatalkan Puasa:",
+        huraian: "Murid kurang jelas tentang perbezaan antara perbuatan yang tidak sengaja (seperti muntah atau termakan secara tidak sengaja) dengan perbuatan sengaja, serta konsep memasukkan sesuatu ke dalam rongga terbuka."
+      },
+      {
+        tajuk: "Penghayatan Amalan Sunat & Adab:",
+        huraian: "Murid cenderung melaksanakan ibadah puasa sekadar menahan lapar dan dahaga tanpa menghayati amalan sunat (seperti bersahur, menyegerakan berbuka, bertadarus) serta nilai adab dan istiqamah dalam kehidupan seharian."
+      }
+    ];
+
+    const objektifPembelajaran = [
+      "Menyatakan maksud puasa Ramadan dengan tepat.",
+      "Menerangkan hukum puasa Ramadan berdasarkan dalil naqli (Surah al-Baqarah ayat 183) serta terjemahannya.",
+      "Menjelaskan syarat wajib, syarat sah, dan rukun puasa Ramadan beserta lafaz niat dan maksudnya.",
+      "Menghuraikan amalan sunat ketika berpuasa di bulan Ramadan.",
+      "Menganalisis perkara-perkara yang membatalkan puasa Ramadan agar dapat menghindarinya dalam kehidupan seharian.",
+      "Merumus kepentingan ibadah puasa Ramadan serta mengamalkannya secara beradab dan istiqamah."
+    ];
+
+    let currentTab = 'all'; // 'all' | 'masalah' | 'objektif'
+    let selectedMasalah = null;
+    let selectedObjektif = null;
+
+    /* ==========================================================================
+       3. ENJIN PAPARAN (DISEMPURNAKAN UNTUK 700x500 JOTFORM EMBED)
+       ========================================================================== */
+    function switchTab(tab) {
+      playSFX('tab');
+      currentTab = tab;
+
+      const btns = {
+        all: document.getElementById('btnTabAll'),
+        masalah: document.getElementById('btnTabMasalah'),
+        objektif: document.getElementById('btnTabObjektif')
+      };
+
+      Object.keys(btns).forEach(key => {
+        if (key === tab) {
+          btns[key].className = "px-2 py-1 rounded-lg bg-amber-400 text-emerald-950 border border-amber-300 text-[10px] font-extrabold cursor-pointer shadow";
+        } else {
+          btns[key].className = "px-2 py-1 rounded-lg bg-emerald-900/85 hover:bg-emerald-800 border border-amber-400/40 text-amber-200 text-[10px] font-bold cursor-pointer";
+        }
+      });
+
+      renderWorkspace();
+    }
+
+    function highlightMasalah(idx) {
+      playSFX('click');
+      selectedMasalah = selectedMasalah === idx ? null : idx;
+      renderWorkspace();
+    }
+
+    function highlightObjektif(idx) {
+      playSFX('correct');
+      selectedObjektif = selectedObjektif === idx ? null : idx;
+      renderWorkspace();
+    }
+
+    function renderMasalahCard(isExpanded = false) {
+      const textClass = isExpanded ? "text-xs leading-relaxed" : "text-[10.5px] leading-[1.35]";
+      const padClass = isExpanded ? "p-3" : "p-2";
+
+      return `
+        <section class="gold-card gold-border rounded-xl p-2.5 flex flex-col justify-between min-h-0 overflow-y-auto panel-scroll">
+          <div class="border-b border-amber-400/30 pb-1.5 mb-1.5 shrink-0">
+            <h2 class="text-xs font-extrabold text-amber-300 tracking-tight">
+              1. Penyataan Masalah (Isu Pembelajaran)
+            </h2>
+          </div>
+
+          <div class="flex-1 flex flex-col justify-evenly gap-1.5">
+            ${penyataanMasalah.map((item, idx) => {
+              const isSelected = selectedMasalah === idx;
+              return `
+                <div onclick="highlightMasalah(${idx})"
+                     class="${padClass} rounded-lg border cursor-pointer ${isSelected ? 'bg-amber-400/20 border-amber-300 shadow-md' : 'bg-emerald-950/85 border-amber-400/30 hover:border-amber-300/70'}">
+                  <p class="${textClass} text-emerald-50">
+                    <span class="font-extrabold text-amber-300">• ${item.tajuk}</span> ${item.huraian}
+                  </p>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderObjektifCard(isExpanded = false) {
+      const textClass = isExpanded ? "text-xs leading-snug" : "text-[10.5px] leading-[1.3]";
+      const padClass = isExpanded ? "px-3 py-2" : "px-2 py-1.5";
+
+      return `
+        <section class="gold-card gold-border rounded-xl p-2.5 flex flex-col justify-between min-h-0 overflow-y-auto panel-scroll">
+          <div class="border-b border-amber-400/30 pb-1.5 mb-1.5 shrink-0">
+            <h2 class="text-xs font-extrabold text-amber-300 tracking-tight">
+              2. Objektif Pembelajaran
+            </h2>
+            <p class="text-[10px] font-semibold text-emerald-100 mt-0.5 leading-tight">
+              Pada akhir sesi pengajaran dan pembelajaran, murid dapat:
+            </p>
+          </div>
+
+          <div class="flex-1 flex flex-col justify-evenly gap-1">
+            ${objektifPembelajaran.map((teks, idx) => {
+              const isSelected = selectedObjektif === idx;
+              return `
+                <div onclick="highlightObjektif(${idx})"
+                     class="${padClass} rounded-lg border flex items-start gap-2 cursor-pointer ${isSelected ? 'bg-amber-400/20 border-amber-300 shadow-md' : 'bg-emerald-950/85 border-emerald-400/30 hover:border-amber-300/70'}">
+                  <span class="w-4 h-4 rounded bg-amber-400/25 border border-amber-400/50 text-amber-300 font-extrabold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                    ${idx + 1}
+                  </span>
+                  <p class="${textClass} text-emerald-50">
+                    ${teks}
+                  </p>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderWorkspace() {
+      const workspace = document.getElementById('mainWorkspace');
+
+      if (currentTab === 'all') {
+        workspace.className = "flex-1 grid grid-cols-2 gap-2 min-h-0 overflow-hidden";
+        workspace.innerHTML = renderMasalahCard(false) + renderObjektifCard(false);
+      } else if (currentTab === 'masalah') {
+        workspace.className = "flex-1 grid grid-cols-1 gap-2 min-h-0 overflow-hidden";
+        workspace.innerHTML = renderMasalahCard(true);
+      } else {
+        workspace.className = "flex-1 grid grid-cols-1 gap-2 min-h-0 overflow-hidden";
+        workspace.innerHTML = renderObjektifCard(true);
+      }
+    }
+
+    // Mulakan Aplikasi Semasa Halaman Dimuatkan
+    window.onload = function () {
+      renderWorkspace();
+    };
+  </script>
+</body>
+</html>
